@@ -1,4 +1,5 @@
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
+import Link from "next/link";
 import { MdExplore, MdScanner, MdTravelExplore } from "react-icons/md";
 import { PiGameControllerFill } from "react-icons/pi";
 
@@ -53,6 +54,8 @@ export default function Hero() {
 
         <Flex gap={1}>
           <Button
+            as={Link}
+            href="/login"
             variant={"ghost"}
             colorScheme="whiteAlpha"
             color="white"
@@ -61,6 +64,8 @@ export default function Hero() {
             Login
           </Button>
           <Button
+            as={Link}
+            href="/register"
             variant={"outline"}
             colorScheme="whiteAlpha"
             color="white"
