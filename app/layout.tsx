@@ -1,6 +1,6 @@
 // app/layout.tsx
 import { Provider } from "../components/ChakraProvider";
-
+import "./global.css";
 export default function RootLayout({
   children,
 }: {
