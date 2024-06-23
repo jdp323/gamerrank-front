@@ -45,7 +45,7 @@ export function GameCard() {
           <Divider my={2} marginTop={"auto"} />
           <Flex gap={2} alignItems={"center"}>
             <Text fontSize="xs" textColor={"gray.500"}>
-              by humayun
+              by dotafan
             </Text>
             <Divider orientation="vertical" borderColor="primary" />
             <Button
