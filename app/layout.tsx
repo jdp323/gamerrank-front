@@ -8,7 +8,13 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body>
+      <body
+        style={{
+          maxWidth: "1100px",
+          margin: "0 auto",
+          background: "rgb(246, 246, 239)",
+        }}
+      >
         <Provider>{children}</Provider>
       </body>
     </html>
