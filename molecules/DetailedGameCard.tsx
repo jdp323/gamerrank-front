@@ -33,11 +33,9 @@ export function DetailedGameCard() {
           flexShrink={0}
         />
         <Flex flexDir={"column"}>
-          <ChakraLink as={Link} href="">
-            <Heading size={"md"} fontWeight={"600"} color="gray.600">
-              Dota 2
-            </Heading>
-          </ChakraLink>
+          <Heading size={"md"} fontWeight={"600"} color="gray.600">
+            Dota 2
+          </Heading>
           <Text>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel facilis
             earum cum saepe, dignissimos fuga official.
@@ -60,7 +58,6 @@ export function DetailedGameCard() {
           </Flex>
           <Divider my={2} />
           <Flex gap={2} alignItems={"center"}>
-            <Divider orientation="vertical" borderColor="primary" />
             <Button
               variant={"outline"}
               size={"xs"}
