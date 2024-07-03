@@ -55,8 +55,11 @@ This is "This War of Mine" - a dark, beautiful, haunting, exhilerating, and horr
 
 What's that tagline, "The first casualty of war is innocence"? It applies here - in a way you would have never imagined coming from a computer game.`}
       </Text>
-      <Divider borderColor={"black.700"} maxW="50px" mt="10px" />
-      <Text fontWeight={"500"}>dotafan</Text>
+      <Divider borderColor={"gray.300"} mt="10px" mb="10px" />
+      <Flex gap={5}>
+        <Text fontWeight={"500"}>dotafan</Text>
+        <Text fontWeight={"400"}>{new Date().toLocaleString()}</Text>
+      </Flex>
     </Flex>
   );
 }
