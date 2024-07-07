@@ -25,6 +25,7 @@ export abstract class Controller {
     handler: RequestFunction,
     requiredUserType?: UserType
   ) {
+    console.log("Registering: POST", this.route + "/" + resource);
     this.app.post(
       this.route + "/" + resource,
       this.handlerWrapper(handler, requiredUserType)
@@ -35,6 +36,8 @@ export abstract class Controller {
     handler: RequestFunction,
     requiredUserType?: UserType
   ) {
+    console.log("Registering: GET", this.route + "/" + resource);
+
     this.app.get(
       this.route + "/" + resource,
       this.handlerWrapper(handler, requiredUserType)
@@ -58,7 +61,7 @@ export abstract class Controller {
       const token = authHeader.split(" ")[1];
       if (!token) return res.status(401).json({ error: "No token supplied" });
       try {
-        const v = jwt.verify(token, process.env.JWT_TOKEN!) as {
+        const v = jwt.verify(token, process.env.JWT_SECRET!) as {
           username: string;
           id: number;
         };
@@ -69,6 +72,7 @@ export abstract class Controller {
 
         next();
       } catch (er) {
+        console.log(er);
         return res.status(400).json({ error: "Invalid token" });
       }
     };
