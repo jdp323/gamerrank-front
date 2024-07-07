@@ -8,8 +8,50 @@ datasource db {
 }
 
 model User {
-  id           Int    @id @default(autoincrement())
-  username     String @unique
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  type         UserType
   name         String
   passwordHash String
+  games        Game[]
+  createdAt    DateTime @default(now())
+  reviews      Review[]
+  votes        Vote[]
+}
+
+model Game {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String   @default("")
+  url         String
+  imageUrl    String
+  userId      Int
+  createdBy   User     @relation(references: [id], fields: [userId])
+  createdAt   DateTime @default(now())
+  reviews     Review[]
+  votes       Vote[]
+}
+
+model Review {
+  id        Int      @id @default(autoincrement())
+  text      String
+  createdBy User     @relation(references: [id], fields: [userId])
+  userId    Int
+  createdAt DateTime @default(now())
+  gameId    Int
+  game      Game     @relation(references: [id], fields: [gameId])
+}
+
+model Vote {
+  id        Int      @id @default(autoincrement())
+  createdBy User     @relation(references: [id], fields: [userId])
+  userId    Int
+  createdAt DateTime @default(now())
+  gameId    Int
+  game      Game     @relation(references: [id], fields: [gameId])
+}
+
+enum UserType {
+  GAMER
+  REVIEWER
 }
