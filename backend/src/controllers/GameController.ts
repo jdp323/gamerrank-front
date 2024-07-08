@@ -8,7 +8,7 @@ import formidable from "formidable";
 export class GameController extends Controller {
   constructor(app: Router, db: PrismaClient) {
     super(app, "/game", db);
-    this.subscribePostRoute("create", this.create, UserType.REVIEWER);
+    this.subscribePostRoute("create", this.create, true);
     this.subscribeGetRoute("get/:id", this.get);
     this.subscribeGetRoute("timeline", this.getTimeline);
   }
@@ -53,7 +53,15 @@ export class GameController extends Controller {
         where: {
           id,
         },
-        include: { _count: { select: { votes: true } }, reviews: true },
+        include: {
+          _count: { select: { votes: true, reviews: true } },
+          reviews: {
+            include: {
+              createdBy: { select: { id: true, username: true, name: true } },
+            },
+          },
+          createdBy: { select: { id: true, name: true, username: true } },
+        },
       });
       return res.json(game);
     } catch (er) {
@@ -65,7 +73,7 @@ export class GameController extends Controller {
       orderBy: { votes: { _count: "desc" } },
       include: {
         _count: { select: { reviews: true, votes: true } },
-        createdBy: { select: { name: true, id: true } },
+        createdBy: { select: { name: true, username: true, id: true } },
       },
     });
     return res.json({ games });

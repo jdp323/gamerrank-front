@@ -23,41 +23,38 @@ export abstract class Controller {
   public subscribePostRoute(
     resource: string,
     handler: RequestFunction,
-    requiredUserType?: UserType
+    authRequired?: boolean
   ) {
     console.log("Registering: POST", this.route + "/" + resource);
     this.app.post(
       this.route + "/" + resource,
-      this.handlerWrapper(handler, requiredUserType)
+      this.handlerWrapper(handler, authRequired)
     );
   }
   public subscribeGetRoute(
     resource: string,
     handler: RequestFunction,
-    requiredUserType?: UserType
+    authRequired?: boolean
   ) {
     console.log("Registering: GET", this.route + "/" + resource);
 
     this.app.get(
       this.route + "/" + resource,
-      this.handlerWrapper(handler, requiredUserType)
+      this.handlerWrapper(handler, authRequired)
     );
   }
 
-  protected handlerWrapper(
-    handler: RequestFunction,
-    requiredUserType?: UserType
-  ) {
-    if (requiredUserType) {
-      return [this.authMiddle(requiredUserType).bind(this), handler.bind(this)];
+  protected handlerWrapper(handler: RequestFunction, authRequired?: boolean) {
+    if (authRequired) {
+      return [this.authMiddle().bind(this), handler.bind(this)];
     }
     return [handler.bind(this)];
   }
 
-  protected authMiddle(requiredType: UserType) {
+  protected authMiddle() {
     return async (req: Request, res: Response, next: NextFunction) => {
       const authHeader = req.headers["authorization"];
-      if (!authHeader) return res.status(401);
+      if (!authHeader) return res.status(401).json("No token supplied");
       const token = authHeader.split(" ")[1];
       if (!token) return res.status(401).json({ error: "No token supplied" });
       try {

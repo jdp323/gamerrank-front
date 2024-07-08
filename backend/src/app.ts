@@ -13,6 +13,8 @@ const db = new PrismaClient();
 app.use(express.json());
 app.use(cors({ origin: "*" }));
 
+app.use("/images", express.static("uploads"));
+
 ControllerFactory.createController(ControllerType.User, app, db);
 ControllerFactory.createController(ControllerType.Game, app, db);
 ControllerFactory.createController(ControllerType.Review, app, db);
