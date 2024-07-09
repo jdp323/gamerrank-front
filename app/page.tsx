@@ -1,12 +1,17 @@
+"use client";
+import { API_URL } from "@/constants";
 import { GameCard } from "@/molecules/GameCard";
-import { Box, Container, Flex, Heading, Text } from "@chakra-ui/react";
-import Image from "next/image";
-import { SlGameController } from "react-icons/sl";
-import { IoGameController } from "react-icons/io5";
-import { PiGameControllerFill } from "react-icons/pi";
 import Hero from "@/molecules/Hero";
+import { API } from "@/services/api";
+import { Flex } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Home() {
+  const query = useQuery({
+    queryKey: ["timeline"],
+    queryFn: API.fetchTimeline,
+  });
+
   return (
     <Flex
       margin={"0 auto"}
@@ -18,11 +23,19 @@ export default function Home() {
     >
       <Hero />
       <Flex flexDir={"column"} gap={10}>
-        <GameCard />
-        <GameCard />
-        <GameCard />
-        <GameCard />
-        <GameCard />
+        {query.data?.map((i) => (
+          <GameCard
+            key={i.id}
+            id={i.id}
+            author={i.createdBy.username}
+            desc={i.description}
+            image={API_URL + i.imageUrl}
+            reviews={i._count.reviews}
+            votes={i._count.votes}
+            title={i.title}
+            date={new Date(i.createdAt).toLocaleString()}
+          />
+        ))}
       </Flex>
     </Flex>
   );

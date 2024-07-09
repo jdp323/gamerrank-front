@@ -1,6 +1,13 @@
+"use client";
 // app/layout.tsx
+import { Toaster } from "react-hot-toast";
 import { Provider } from "../components/ChakraProvider";
 import "./global.css";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { UserContextProvider } from "@/contexts/UserContext";
+
+const queryClient = new QueryClient();
+
 export default function RootLayout({
   children,
 }: {
@@ -15,7 +22,12 @@ export default function RootLayout({
           background: "rgb(246, 246, 239)",
         }}
       >
-        <Provider>{children}</Provider>
+        <Toaster position="top-right" />
+        <Provider>
+          <QueryClientProvider client={queryClient}>
+            <UserContextProvider>{children}</UserContextProvider>
+          </QueryClientProvider>
+        </Provider>
       </body>
     </html>
   );

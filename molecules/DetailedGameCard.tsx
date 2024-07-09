@@ -20,12 +20,22 @@ import {
   MdOutlineComment,
   MdOutlineRateReview,
 } from "react-icons/md";
-export function DetailedGameCard() {
+export function DetailedGameCard(props: {
+  id: number;
+  title: string;
+  desc: string;
+  url: string;
+  image: string;
+  author: string;
+  votes: number;
+  reviews: number;
+  date: string;
+}) {
   return (
     <Flex maxW={"100%"}>
       <Flex gap={3}>
         <Image
-          src="https://cdn.vox-cdn.com/thumbor/UOkQJMoGf-yJzYHDX88vLs172Qs=/1400x1400/filters:format(jpeg)/cdn.vox-cdn.com/uploads/chorus_asset/file/8975721/bg_01.jpg"
+          src={props.image}
           w={"330px"}
           h={"330px"}
           overflow={"hidden"}
@@ -34,26 +44,25 @@ export function DetailedGameCard() {
         />
         <Flex flexDir={"column"}>
           <Heading size={"md"} fontWeight={"600"} color="gray.600">
-            Dota 2
+            {props.title}
           </Heading>
-          <Text>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Vel facilis
-            earum cum saepe, dignissimos fuga official.
-          </Text>
+          <Text>{props.desc}</Text>
 
           <Flex gap="10" marginTop={"auto"}>
             <Flex flexDir={"column"} my="2">
               <Heading as="h3" size="sm">
                 URL
               </Heading>
-              <ChakraLink href="/">https://steam.game.com</ChakraLink>
+              <ChakraLink href={props.url} target="_blank">
+                {props.url}
+              </ChakraLink>
             </Flex>
 
             <Flex flexDir={"column"} my="2">
               <Heading as="h3" size="sm">
                 Posted by
               </Heading>
-              <Text>dotafan</Text>
+              <Text>{props.author}</Text>
             </Flex>
           </Flex>
           <Divider my={2} />
@@ -63,15 +72,18 @@ export function DetailedGameCard() {
               size={"xs"}
               leftIcon={<MdOutlineThumbUp size={16} />}
             >
-              6
+              {props.votes}
             </Button>
             <Button
               variant={"ghost"}
               size={"xs"}
               leftIcon={<MdOutlineRateReview size={16} />}
             >
-              6
+              {props.reviews}
             </Button>
+            <Text marginLeft={"auto"} fontSize={"small"} color="gray.500">
+              {props.date}
+            </Text>
           </Flex>
         </Flex>
       </Flex>

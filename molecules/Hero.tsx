@@ -1,9 +1,17 @@
+"use client";
+import { useUser } from "@/contexts/UserContext";
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
-import { MdExplore, MdScanner, MdTravelExplore } from "react-icons/md";
+import {
+  MdExplore,
+  MdPerson,
+  MdScanner,
+  MdTravelExplore,
+} from "react-icons/md";
 import { PiGameControllerFill } from "react-icons/pi";
 
 export default function Hero() {
+  const user = useUser();
   return (
     <Flex
       background={"blue.600"}
@@ -52,27 +60,53 @@ export default function Hero() {
           </Text>
         </Flex>
 
-        <Flex gap={1}>
-          <Button
-            as={Link}
-            href="/login"
-            variant={"ghost"}
-            colorScheme="whiteAlpha"
-            color="white"
-            size="sm"
-          >
-            Login
-          </Button>
-          <Button
-            as={Link}
-            href="/register"
-            variant={"outline"}
-            colorScheme="whiteAlpha"
-            color="white"
-            size={"sm"}
-          >
-            Get Started
-          </Button>
+        <Flex gap={1} alignContent={"center"}>
+          {!user.user ? (
+            <>
+              {" "}
+              <Button
+                as={Link}
+                href="/login"
+                variant={"ghost"}
+                colorScheme="whiteAlpha"
+                color="white"
+                size="sm"
+              >
+                Login
+              </Button>
+              <Button
+                as={Link}
+                href="/register"
+                variant={"outline"}
+                colorScheme="whiteAlpha"
+                color="white"
+                size={"sm"}
+              >
+                Get Started
+              </Button>
+            </>
+          ) : (
+            <>
+              <Button
+                leftIcon={<MdPerson />}
+                variant={"ghost"}
+                colorScheme="whiteAlpha"
+                color="white"
+                size="sm"
+              >
+                {user.user.username}
+              </Button>
+
+              <Button
+                variant={"ghost"}
+                colorScheme="whiteAlpha"
+                color="white"
+                size="sm"
+              >
+                Logout
+              </Button>
+            </>
+          )}
         </Flex>
       </Flex>
 
