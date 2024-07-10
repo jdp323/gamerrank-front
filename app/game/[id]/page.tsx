@@ -14,7 +14,7 @@ export default function GamePage() {
   const { id } = useParams();
 
   const { data } = useQuery({
-    queryKey: ["game", id],
+    queryKey: ["game", Number(id)],
     queryFn: () => API.fetchGame(Number(id)),
   });
 
@@ -32,10 +32,10 @@ export default function GamePage() {
       {data && (
         <>
           <DetailedGameCard
+            id={Number(data.id)}
             date={new Date(data.createdAt).toLocaleString()}
             author={data.createdBy.username}
             desc={data.description}
-            id={data.id}
             image={API_URL + data.imageUrl}
             reviews={data._count.reviews}
             votes={data._count.votes}

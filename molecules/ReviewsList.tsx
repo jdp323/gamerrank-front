@@ -6,12 +6,9 @@ import {
   Divider,
   Flex,
   Heading,
-  Icon,
-  Input,
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import { MdReviews } from "react-icons/md";
 
 export default function ReviewsList(props: {
   reviews: Array<{
@@ -29,9 +26,7 @@ export default function ReviewsList(props: {
           Users must be logged in to review.
         </Text>
       ) : user.user.type != "REVIEWER" ? (
-        <Text color="gray.500">
-          Only user with role "REVIEWER" can write reviews.
-        </Text>
+        <Text color="gray.500">Only reviewers can post reviews.</Text>
       ) : (
         <>
           <Heading size="md" fontWeight={"500"}>
@@ -50,6 +45,21 @@ export default function ReviewsList(props: {
         </>
       )}
       <Flex flexDir={"column"} gap="4">
+        {props.reviews.length == 0 && (
+          <Text
+            p="2"
+            border="1px solid"
+            mx="auto"
+            w="full"
+            textAlign={"center"}
+            borderRadius={"8"}
+            color="yellow.600"
+            mt="10"
+            fontWeight={"500"}
+          >
+            No Reviews posted yet
+          </Text>
+        )}
         {props.reviews.map((r) => (
           <Review
             key={r.id}

@@ -28,6 +28,7 @@ export function UserContextProvider({
     const token = localStorage.getItem("token");
     if (!token) {
       setLoading(false);
+      setUser(null);
       return;
     }
     API.fetchCurrentUser()
@@ -36,6 +37,7 @@ export function UserContextProvider({
         setUser(user);
       })
       .catch((er) => {
+        setUser(null);
         console.error(er);
         localStorage.removeItem("token"); // remove token from storage to avoid dead refetching
       })

@@ -39,7 +39,7 @@ export default function LoginPage() {
 
   return (
     <Flex
-      w="100vw"
+      w="100%"
       h="100vh"
       justify={"center"}
       align={"center"}

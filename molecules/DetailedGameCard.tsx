@@ -1,25 +1,17 @@
+import { useUser } from "@/contexts/UserContext";
+import { API, IGame } from "@/services/api";
 import {
-  Container,
-  Flex,
-  Heading,
-  Icon,
-  IconButton,
-  Image,
-  Text,
+  Button,
   Link as ChakraLink,
   Divider,
-  Button,
+  Flex,
+  Heading,
+  Image,
+  Text,
 } from "@chakra-ui/react";
-import Link from "next/link";
-import {
-  MdKeyboardArrowUp,
-  MdKeyboardArrowDown,
-  MdThumbUp,
-  MdOutlineThumbUpAlt,
-  MdOutlineThumbUp,
-  MdOutlineComment,
-  MdOutlineRateReview,
-} from "react-icons/md";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+import { MdOutlineRateReview, MdOutlineThumbUp } from "react-icons/md";
 export function DetailedGameCard(props: {
   id: number;
   title: string;
@@ -31,6 +23,38 @@ export function DetailedGameCard(props: {
   reviews: number;
   date: string;
 }) {
+  const user = useUser();
+  const data = useQuery({
+    queryKey: ["vote", props.id],
+    queryFn: () => API.fetchVoteStatus(props.id),
+  });
+  const client = useQueryClient();
+
+  const vote = useMutation({
+    mutationKey: ["mt-vote", props.id],
+    mutationFn: async (status: boolean) => {
+      await API.updateVoteStatus(props.id, status);
+    },
+    onSuccess(data, status, context) {
+      client.setQueryData(["vote", props.id], () => status);
+
+      client.setQueryData(["game", props.id], (old: IGame) => {
+        return {
+          ...old,
+          _count: {
+            reviews: old._count.reviews,
+            votes: old._count.votes + (status ? 1 : -1),
+          },
+        };
+      });
+      toast.success(status ? "Upvoted game" : "Vote removed");
+    },
+  });
+
+  function handleVote() {
+    vote.mutate(!data.data);
+  }
+
   return (
     <Flex maxW={"100%"}>
       <Flex gap={3}>
@@ -67,14 +91,38 @@ export function DetailedGameCard(props: {
           </Flex>
           <Divider my={2} />
           <Flex gap={2} alignItems={"center"}>
+            {user.user?.type == "GAMER" ? (
+              <Button
+                variant={data.data ? "solid" : "ghost"}
+                colorScheme="yellow"
+                size={"xs"}
+                borderColor="gray.800"
+                leftIcon={<MdOutlineThumbUp size={16} />}
+                onClick={handleVote}
+                isLoading={data.isLoading || vote.isPending}
+              >
+                {data.data ? "Voted" : "Up Vote"}
+              </Button>
+            ) : user.user ? (
+              <Text fontSize={"xs"} color="gray.600">
+                Only gamers can vote
+              </Text>
+            ) : (
+              <Text fontSize={"xs"} color="gray.600">
+                Login to vote
+              </Text>
+            )}
             <Button
+              cursor={"default"}
               variant={"outline"}
               size={"xs"}
+              border="none"
               leftIcon={<MdOutlineThumbUp size={16} />}
             >
               {props.votes}
             </Button>
             <Button
+              cursor={"default"}
               variant={"ghost"}
               size={"xs"}
               leftIcon={<MdOutlineRateReview size={16} />}

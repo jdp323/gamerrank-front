@@ -102,6 +102,12 @@ export default function Hero() {
                 colorScheme="whiteAlpha"
                 color="white"
                 size="sm"
+                onClick={() => {
+                  localStorage.removeItem("token");
+                  user.refetch();
+
+                  location.reload();
+                }}
               >
                 Logout
               </Button>

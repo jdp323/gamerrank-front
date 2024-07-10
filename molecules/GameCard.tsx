@@ -56,6 +56,7 @@ export function GameCard(props: {
             </Text>
             <Divider orientation="vertical" borderColor="primary" />
             <Button
+              cursor={"default"}
               variant={"outline"}
               size={"xs"}
               leftIcon={<MdOutlineThumbUp size={16} />}
@@ -63,6 +64,7 @@ export function GameCard(props: {
               {props.votes}
             </Button>
             <Button
+              cursor={"default"}
               variant={"ghost"}
               size={"xs"}
               leftIcon={<MdOutlineRateReview size={16} />}

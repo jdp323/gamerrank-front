@@ -13,7 +13,7 @@ interface ITimelineGame {
   createdBy: { name: string; id: number; username: string };
 }
 
-interface IGame {
+export interface IGame {
   id: number;
   title: string;
   description: string;
@@ -57,7 +57,7 @@ export namespace API {
     return res.data;
   }
   export async function fetchCurrentUser(): Promise<IUser> {
-    const token = localStorage.getItem("token");
+    const token = getToken();
 
     const res = (await axios.get(API_URL + "/user/get", {
       headers: { Authorization: "Bearer " + token },
@@ -73,5 +73,46 @@ export namespace API {
       password: pass,
     })) as any;
     return res.data;
+  }
+  export async function registerUser(
+    username: string,
+    password: string,
+    name: string,
+    type: string
+  ): Promise<{ token: string }> {
+    const res = (await axios.post(API_URL + "/user/register", {
+      username,
+      password,
+      type,
+      name,
+    })) as any;
+    return res.data;
+  }
+  export async function fetchVoteStatus(gameId: number): Promise<boolean> {
+    const res = (await axios.get(API_URL + "/vote/voted/" + gameId, {
+      headers: { Authorization: "Bearer " + getToken() },
+    })) as any;
+    return res.data.voted;
+  }
+  export async function updateVoteStatus(
+    gameId: number,
+    status: boolean
+  ): Promise<boolean> {
+    const res = (await axios.post(
+      API_URL + "/vote/vote",
+      {
+        gameId,
+        status,
+      },
+      {
+        headers: { Authorization: "Bearer " + getToken() },
+      }
+    )) as any;
+    return res.data;
+  }
+
+  function getToken() {
+    const token = localStorage.getItem("token");
+    return token;
   }
 }
