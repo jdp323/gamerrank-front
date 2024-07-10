@@ -44,6 +44,7 @@ export default function GamePage() {
           />
 
           <ReviewsList
+            gameId={Number(data.id)}
             reviews={data.reviews.map((r) => ({
               author: r.createdBy.username,
               date: r.createdAt,

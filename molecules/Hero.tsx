@@ -3,7 +3,10 @@ import { useUser } from "@/contexts/UserContext";
 import { Box, Button, Flex, Image, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import {
+  MdAddCircle,
   MdExplore,
+  MdGamepad,
+  MdOutlineCreate,
   MdPerson,
   MdScanner,
   MdTravelExplore,
@@ -139,14 +142,27 @@ export default function Hero() {
         </Text>
       </Flex>
       <Flex gap={1}>
-        <Button
-          colorScheme="whiteAlpha"
-          variant={"outline"}
-          color="white"
-          leftIcon={<MdTravelExplore />}
-        >
-          Explore
-        </Button>
+        {user.user?.type == "REVIEWER" ? (
+          <Button
+            as={Link}
+            href="/new"
+            colorScheme="whiteAlpha"
+            variant={"outline"}
+            color="white"
+            leftIcon={<MdGamepad />}
+          >
+            New Game
+          </Button>
+        ) : (
+          <Button
+            colorScheme="whiteAlpha"
+            variant={"outline"}
+            color="white"
+            leftIcon={<MdTravelExplore />}
+          >
+            Explore
+          </Button>
+        )}
       </Flex>
     </Flex>
   );

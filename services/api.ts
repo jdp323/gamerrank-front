@@ -110,6 +110,28 @@ export namespace API {
     )) as any;
     return res.data;
   }
+  export async function postReview(
+    gameId: number,
+    text: string
+  ): Promise<boolean> {
+    const res = (await axios.post(
+      API_URL + "/review/vote",
+      {
+        gameId,
+        text,
+      },
+      {
+        headers: { Authorization: "Bearer " + getToken() },
+      }
+    )) as any;
+    return res.data;
+  }
+  export async function fetchReviewStatus(gameId: number): Promise<boolean> {
+    const res = (await axios.get(API_URL + "/review/posted/" + gameId, {
+      headers: { Authorization: "Bearer " + getToken() },
+    })) as any;
+    return res.data.posted;
+  }
 
   function getToken() {
     const token = localStorage.getItem("token");
