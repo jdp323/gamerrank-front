@@ -115,7 +115,7 @@ export namespace API {
     text: string
   ): Promise<boolean> {
     const res = (await axios.post(
-      API_URL + "/review/vote",
+      API_URL + "/review/create",
       {
         gameId,
         text,
@@ -131,6 +131,12 @@ export namespace API {
       headers: { Authorization: "Bearer " + getToken() },
     })) as any;
     return res.data.posted;
+  }
+  export async function postGame(form: FormData): Promise<{ id: string }> {
+    const res = (await axios.post(API_URL + "/game/create", form, {
+      headers: { Authorization: "Bearer " + getToken() },
+    })) as any;
+    return res.data;
   }
 
   function getToken() {

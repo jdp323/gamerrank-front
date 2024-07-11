@@ -31,8 +31,8 @@ export function GameCard(props: {
   date: string;
 }) {
   return (
-    <Flex maxW={"100%"}>
-      <Flex gap={3}>
+    <Flex w={"100%"}>
+      <Flex gap={3} w="full">
         <Image
           src={props.image}
           w={"120px"}
@@ -42,7 +42,7 @@ export function GameCard(props: {
           objectPosition={"center"}
           flexShrink={0}
         />
-        <Flex flexDir={"column"}>
+        <Flex flexDir={"column"} w="full">
           <ChakraLink as={Link} href={"/game/" + props.id}>
             <Heading size={"md"} fontWeight={"600"} color="gray.600">
               {props.title}
@@ -50,7 +50,7 @@ export function GameCard(props: {
           </ChakraLink>
           <Text>{props.desc}</Text>
           <Divider my={2} marginTop={"auto"} />
-          <Flex gap={2} alignItems={"center"}>
+          <Flex gap={2} alignItems={"center"} w="full">
             <Text fontSize="xs" textColor={"gray.500"}>
               by {props.author}
             </Text>

@@ -49,8 +49,6 @@ export default function LoginPage() {
         p="30px"
         w="full"
         maxW={"460px"}
-        bg="gray.50"
-        boxShadow={"1px 1px 3px 3px #3332"}
         borderRadius={"8px"}
         flexDir={"column"}
         gap={5}
@@ -76,6 +74,9 @@ export default function LoginPage() {
               isRequired
               minLength={3}
               type="username"
+              variant={"ghost"}
+              bg="hsl(60 28% 86% / 1)"
+              placeholder="Enter username"
               value={inputs.username}
               onChange={(e) =>
                 setInputs({ ...inputs, username: e.target.value })
@@ -89,6 +90,9 @@ export default function LoginPage() {
               isRequired
               minLength={3}
               type="password"
+              variant={"ghost"}
+              bg="hsl(60 28% 86% / 1)"
+              placeholder="Enter password"
               value={inputs.password}
               onChange={(e) =>
                 setInputs({ ...inputs, password: e.target.value })
@@ -98,8 +102,8 @@ export default function LoginPage() {
           </FormControl>
           <Button
             type="submit"
+            bg="black"
             variant={"blackAlpha"}
-            bg={"black"}
             color="white"
             mt={4}
             isLoading={loading}

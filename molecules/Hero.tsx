@@ -17,18 +17,18 @@ export default function Hero() {
   const user = useUser();
   return (
     <Flex
-      background={"blue.600"}
+      background={"orange.300"}
       w="100%"
       alignItems={"center"}
       flexDir={"column"}
       minH={"360px"}
       justifyContent={"center"}
       position={"relative"}
-      borderTop={"4px solid black"}
+      borderTop={"4px solid #000"}
       gap={8}
     >
       <Image
-        src="https://wallpaper.forfun.com/fetch/e8/e8913c1c351d042f96f9881866904cdf.jpeg?download=video_game-dota_2-shadow_fiend_dota_2-349002.jpeg"
+        src="/cover.jpeg"
         position={"absolute"}
         left={0}
         top={0}
@@ -54,7 +54,8 @@ export default function Hero() {
         h="40px"
         alignItems={"center"}
         justifyContent={"space-between"}
-        px="10px"
+        pt="10px"
+        px="20px"
       >
         <Flex gap={1}>
           <PiGameControllerFill size={25} color="white" />
@@ -108,8 +109,6 @@ export default function Hero() {
                 onClick={() => {
                   localStorage.removeItem("token");
                   user.refetch();
-
-                  location.reload();
                 }}
               >
                 Logout

@@ -12,6 +12,8 @@ export default function Home() {
     queryFn: API.fetchTimeline,
   });
 
+  console.log(query.data);
+
   return (
     <Flex
       margin={"0 auto"}
@@ -20,6 +22,7 @@ export default function Home() {
       flexDir={"column"}
       alignItems={"center"}
       maxW={"1100px"}
+      mb="10"
     >
       <Hero />
       <Flex flexDir={"column"} gap={10}>

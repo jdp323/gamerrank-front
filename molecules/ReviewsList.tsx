@@ -10,8 +10,9 @@ import {
   Text,
   Textarea,
 } from "@chakra-ui/react";
-import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { FormEventHandler, useState } from "react";
+import toast from "react-hot-toast";
 
 export default function ReviewsList(props: {
   gameId: number;
@@ -19,6 +20,7 @@ export default function ReviewsList(props: {
     id: number;
     text: string;
     author: string;
+    authorId: number;
     date: string;
   }>;
 }) {
@@ -26,13 +28,19 @@ export default function ReviewsList(props: {
 
   const [text, setText] = useState("");
   const reviewPosted = useQuery({
-    queryKey: ["reviewd", props.gameId],
+    queryKey: ["reviewed", props.gameId],
     queryFn: () => API.fetchReviewStatus(props.gameId),
   });
+  const client = useQueryClient();
   const postReview = useMutation({
     mutationKey: ["post-review", props.gameId],
     mutationFn: async () => {
       await API.postReview(props.gameId, text);
+    },
+    onSuccess(data, variables, context) {
+      toast.success("Review posted!");
+      client.setQueryData(["reviewed", props.gameId], () => true);
+      client.invalidateQueries({ queryKey: ["game", props.gameId] });
     },
   });
   const handleSubmit: FormEventHandler = (e) => {
@@ -51,7 +59,7 @@ export default function ReviewsList(props: {
         <Text color="gray.500">You've already posted your review</Text>
       ) : (
         <>
-          <Heading size="md" fontWeight={"500"}>
+          <Heading size="md" fontWeight={"500"} color="hsl(60 18% 36% / 1)">
             Write Your Review
           </Heading>
           <Flex as="form" flexDir={"column"} gap="2" onSubmit={handleSubmit}>
@@ -92,6 +100,7 @@ export default function ReviewsList(props: {
         )}
         {props.reviews.map((r) => (
           <Review
+            highlighted={r.authorId == user.user?.id}
             key={r.id}
             author={r.author}
             date={new Date(r.date).toLocaleString()}
@@ -103,14 +112,21 @@ export default function ReviewsList(props: {
   );
 }
 
-export function Review(props: { text: string; author: string; date: string }) {
+export function Review(props: {
+  text: string;
+  author: string;
+  date: string;
+  highlighted: boolean;
+}) {
   return (
     <Flex
       flexDir={"column"}
       bg="hsl(60 58% 95% / 1)"
-      p="10"
-      border="1px solid"
+      p="16px 20px"
+      border={"1px solid"}
+      borderRadius={"4px"}
       borderColor={"gray.300"}
+      boxShadow={props.highlighted ? "0px 0px 2px 1px orange" : ""}
     >
       <Text whiteSpace={"preserve"}>{props.text}</Text>
       <Divider borderColor={"gray.300"} mt="10px" mb="10px" />

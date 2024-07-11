@@ -1,12 +1,20 @@
+"use client";
+import { useUser } from "@/contexts/UserContext";
 import { DetailedGameCard } from "@/molecules/DetailedGameCard";
 import { GameCard } from "@/molecules/GameCard";
+import Hero from "@/molecules/Hero";
 import { NewGameCard } from "@/molecules/NewGameCard";
 import ReviewsList from "@/molecules/ReviewsList";
 import { Button, Container, Flex } from "@chakra-ui/react";
 import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
-
+import { useRouter } from "next/navigation";
 export default function GamePage() {
+  const user = useUser();
+  const router = useRouter();
+  if (!user.user) {
+    router.replace("/");
+  }
   return (
     <Flex flexDir={"column"} my={4} gap="3" alignItems={"flex-start"} w="100%">
       <Button

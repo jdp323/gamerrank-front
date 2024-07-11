@@ -51,7 +51,7 @@ import React, { useState } from "react";
  */
 
 const SingleUploadImage = ({
-  size = "100px",
+  size = "160px",
   rounded = "10%",
   onUpdateFile,
 }: {
@@ -84,7 +84,7 @@ const SingleUploadImage = ({
         position="absolute"
         w="100%"
         h="100%"
-        _hover={{ bg: "blackAlpha.600" }}
+        _hover={{ bg: "blackAlpha.300" }}
       >
         <VStack>
           <AddIcon />

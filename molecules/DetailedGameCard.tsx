@@ -56,8 +56,8 @@ export function DetailedGameCard(props: {
   }
 
   return (
-    <Flex maxW={"100%"}>
-      <Flex gap={3}>
+    <Flex w={"100%"}>
+      <Flex gap={3} w="full">
         <Image
           src={props.image}
           w={"330px"}
@@ -66,7 +66,7 @@ export function DetailedGameCard(props: {
           objectFit={"cover"}
           flexShrink={0}
         />
-        <Flex flexDir={"column"}>
+        <Flex flexDir={"column"} w="full">
           <Heading size={"md"} fontWeight={"600"} color="gray.600">
             {props.title}
           </Heading>
@@ -90,7 +90,7 @@ export function DetailedGameCard(props: {
             </Flex>
           </Flex>
           <Divider my={2} />
-          <Flex gap={2} alignItems={"center"}>
+          <Flex gap={2} alignItems={"center"} w="full">
             {user.user?.type == "GAMER" ? (
               <Button
                 variant={data.data ? "solid" : "ghost"}

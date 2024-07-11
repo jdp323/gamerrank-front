@@ -82,8 +82,6 @@ export default function RegisterPage() {
         p="30px"
         w="full"
         maxW={"460px"}
-        bg="gray.50"
-        boxShadow={"1px 1px 3px 3px #3332"}
         borderRadius={"8px"}
         flexDir={"column"}
         gap={5}
@@ -106,6 +104,8 @@ export default function RegisterPage() {
           <FormControl>
             <FormLabel>Name</FormLabel>
             <Input
+              variant={"ghost"}
+              bg="hsl(60 28% 86% / 1)"
               placeholder="Enter your full name"
               type="text"
               minLength={3}
@@ -120,7 +120,9 @@ export default function RegisterPage() {
           <FormControl>
             <FormLabel>Username</FormLabel>
             <Input
-              placeholder="Chosoe a username name"
+              variant={"ghost"}
+              bg="hsl(60 28% 86% / 1)"
+              placeholder="Chosoe a username"
               minLength={3}
               type="username"
               isRequired
@@ -134,6 +136,8 @@ export default function RegisterPage() {
           <FormControl>
             <FormLabel>Password</FormLabel>
             <Input
+              variant={"ghost"}
+              bg="hsl(60 28% 86% / 1)"
               placeholder="Enter a password"
               minLength={5}
               type="password"
@@ -148,6 +152,8 @@ export default function RegisterPage() {
           <FormControl>
             <FormLabel>Confirm Password</FormLabel>
             <Input
+              variant={"ghost"}
+              bg="hsl(60 28% 86% / 1)"
               placeholder="Confirm password"
               minLength={5}
               type="password"
@@ -162,6 +168,7 @@ export default function RegisterPage() {
           <FormControl>
             <FormLabel>Type</FormLabel>
             <RadioGroup
+              colorScheme="yellow"
               onChange={(v) => setInputs({ ...inputs, type: v })}
               value={inputs.type}
             >

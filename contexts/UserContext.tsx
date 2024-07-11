@@ -1,4 +1,6 @@
+import Spinner from "@/atoms/spinner";
 import { API, IUser } from "@/services/api";
+import { Flex } from "@chakra-ui/react";
 import axios from "axios";
 import { createContext, useContext, useEffect, useState } from "react";
 
@@ -47,7 +49,17 @@ export function UserContextProvider({
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return (
+      <Flex
+        w="100%"
+        h="100vh"
+        justify={"center"}
+        align={"center"}
+        style={{ background: "rgb(246, 246, 239)" }}
+      >
+        <Spinner />
+      </Flex>
+    );
   }
 
   return (

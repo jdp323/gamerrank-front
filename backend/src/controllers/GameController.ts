@@ -56,6 +56,7 @@ export class GameController extends Controller {
         include: {
           _count: { select: { votes: true, reviews: true } },
           reviews: {
+            orderBy: { createdAt: "desc" },
             include: {
               createdBy: { select: { id: true, username: true, name: true } },
             },
@@ -70,12 +71,30 @@ export class GameController extends Controller {
   }
   protected async getTimeline(req: Request, res: Response) {
     const games = await this.db.game.findMany({
-      orderBy: { votes: { _count: "desc" } },
+      orderBy: [{ votes: { _count: "asc" } }, { createdAt: "desc" }],
       include: {
         _count: { select: { reviews: true, votes: true } },
         createdBy: { select: { name: true, username: true, id: true } },
       },
     });
-    return res.json({ games });
+
+    const sortedGames = games.sort((a, b) => {
+      const scoreA = this.calcScore(
+        a._count.votes,
+        (Date.now() - new Date(a.createdAt).getTime()) / 1000 / 60 / 60 // to hours
+      );
+      const scoreB = this.calcScore(
+        b._count.votes,
+        Date.now() - new Date(b.createdAt).getTime() / 1000 / 60 / 60
+      );
+      return scoreB - scoreA;
+    });
+
+    return res.json({ games: sortedGames });
+  }
+
+  // hackernews sorting algorithm
+  protected calcScore(votes: number, item_hour_age: number, gravity = 1.8) {
+    return (votes - 1) / Math.pow(item_hour_age + 2, gravity);
   }
 }

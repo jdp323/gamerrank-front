@@ -34,7 +34,7 @@ export default function GamePage() {
           <DetailedGameCard
             id={Number(data.id)}
             date={new Date(data.createdAt).toLocaleString()}
-            author={data.createdBy.username}
+            author={data.createdBy?.username}
             desc={data.description}
             image={API_URL + data.imageUrl}
             reviews={data._count.reviews}
@@ -47,6 +47,7 @@ export default function GamePage() {
             gameId={Number(data.id)}
             reviews={data.reviews.map((r) => ({
               author: r.createdBy.username,
+              authorId: r.createdBy.id,
               date: r.createdAt,
               id: r.id,
               text: r.text,
