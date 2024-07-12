@@ -9,6 +9,7 @@ import { Button, Container, Flex } from "@chakra-ui/react";
 import Link from "next/link";
 import { MdArrowBack } from "react-icons/md";
 import { useRouter } from "next/navigation";
+import Head from "next/head";
 export default function GamePage() {
   const user = useUser();
   const router = useRouter();
@@ -17,6 +18,7 @@ export default function GamePage() {
   }
   return (
     <Flex flexDir={"column"} my={4} gap="3" alignItems={"flex-start"} w="100%">
+      <title>Post new game | Gamerrank</title>
       <Button
         as={Link}
         href="/"

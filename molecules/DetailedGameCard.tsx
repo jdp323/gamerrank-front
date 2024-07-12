@@ -10,6 +10,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Link from "next/link";
 import toast from "react-hot-toast";
 import { MdOutlineRateReview, MdOutlineThumbUp } from "react-icons/md";
 export function DetailedGameCard(props: {
@@ -108,7 +109,13 @@ export function DetailedGameCard(props: {
                 Only gamers can vote
               </Text>
             ) : (
-              <Text fontSize={"xs"} color="gray.600">
+              <Text
+                as={Link}
+                _hover={{ textDecor: "underline" }}
+                href="/login"
+                fontSize={"xs"}
+                color="gray.600"
+              >
                 Login to vote
               </Text>
             )}

@@ -10,6 +10,7 @@ import toast from "react-hot-toast";
 import { PiGameControllerFill } from "react-icons/pi";
 import { useRouter } from "next/navigation";
 import { useUser } from "@/contexts/UserContext";
+import Head from "next/head";
 export default function LoginPage() {
   const [inputs, setInputs] = useState({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
@@ -45,6 +46,7 @@ export default function LoginPage() {
       align={"center"}
       flexDir={"column"}
     >
+      <title>Login | Gamerrank</title>
       <Flex
         p="30px"
         w="full"

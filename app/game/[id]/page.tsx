@@ -6,8 +6,10 @@ import ReviewsList from "@/molecules/ReviewsList";
 import { API } from "@/services/api";
 import { Button, Container, Flex } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
+import Head from "next/head";
 import Link from "next/link";
 import { useRouter, useParams } from "next/navigation";
+import { useEffect } from "react";
 import { MdArrowBack } from "react-icons/md";
 
 export default function GamePage() {
@@ -17,6 +19,10 @@ export default function GamePage() {
     queryKey: ["game", Number(id)],
     queryFn: () => API.fetchGame(Number(id)),
   });
+
+  useEffect(() => {
+    document.title = data?.title + " | Gamerrank";
+  }, [data]);
 
   return (
     <Flex flexDir={"column"} my={4} gap="3" alignItems={"flex-start"}>

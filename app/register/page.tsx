@@ -17,6 +17,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { isAxiosError } from "axios";
+import Head from "next/head";
 import { useRouter } from "next/navigation";
 import { useState, FormEventHandler } from "react";
 import toast from "react-hot-toast";
@@ -78,6 +79,7 @@ export default function RegisterPage() {
       align={"center"}
       flexDir={"column"}
     >
+      <title>Register | Gamerrank</title>
       <Flex
         p="30px"
         w="full"

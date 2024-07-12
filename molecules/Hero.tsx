@@ -57,9 +57,9 @@ export default function Hero() {
         pt="10px"
         px="20px"
       >
-        <Flex gap={1}>
+        <Flex gap={1} cursor={"default"}>
           <PiGameControllerFill size={25} color="white" />
-          <Text textColor={"white"} fontWeight={"700"}>
+          <Text textColor={"white"} fontWeight={"600"}>
             Gamerrank
           </Text>
         </Flex>
@@ -158,6 +158,11 @@ export default function Hero() {
             variant={"outline"}
             color="white"
             leftIcon={<MdTravelExplore />}
+            onClick={() => {
+              document
+                .getElementById("games-list")
+                ?.scrollIntoView({ behavior: "smooth" });
+            }}
           >
             Explore
           </Button>

@@ -7,6 +7,7 @@ import {
   Divider,
   Flex,
   Heading,
+  Link,
   Text,
   Textarea,
 } from "@chakra-ui/react";
@@ -50,7 +51,13 @@ export default function ReviewsList(props: {
   return (
     <Flex flexDir={"column"} gap="3" w="full">
       {!user.user ? (
-        <Text mx="auto" color="red.500">
+        <Text
+          as={Link}
+          _hover={{ textDecor: "underline" }}
+          href="/login"
+          mx="auto"
+          color="red.500"
+        >
           Users must be logged in to review.
         </Text>
       ) : user.user.type != "REVIEWER" ? (
