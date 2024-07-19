@@ -27,7 +27,8 @@ export class GameController extends Controller {
         const imgName = uid() + "." + file.originalFilename?.split(".").at(-1);
         const newPath = path.join("uploads", imgName);
 
-        fs.renameSync(file.filepath, newPath);
+        fs.copyFileSync(file.filepath, newPath);
+        fs.rmSync(file.filepath);
 
         const game = await this.db.game.create({
           data: {
